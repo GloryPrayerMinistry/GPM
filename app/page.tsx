@@ -2,6 +2,9 @@ import { prisma } from './lib/db';
 import { toDateKey, isFlyerDay } from './lib/dates';
 import HomePage from './components/HomePage';
 
+/** Always fetch fresh flyer/devotional data — never static-cache at build time. */
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const today = toDateKey();
   const showFlyer = isFlyerDay();

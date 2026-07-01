@@ -24,11 +24,27 @@ export default function AdminFlyersPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  const loadFlyers = () => {
+    setLoadError(null);
+    void fetch('/api/admin/flyers', { credentials: 'include' })
+      .then(async (res) => {
+        if (res.status === 401) {
+          setLoadError('Session expired. Please sign in again.');
+          return [];
+        }
+        if (!res.ok) {
+          setLoadError('Could not load flyers. Try refreshing the page.');
+          return [];
+        }
+        return res.json() as Promise<Flyer[]>;
+      })
+      .then(setItems);
+  };
 
   useEffect(() => {
-    void fetch('/api/admin/flyers')
-      .then((res) => (res.ok ? res.json() : []))
-      .then(setItems);
+    loadFlyers();
   }, []);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,9 +76,7 @@ export default function AdminFlyersPage() {
       setShowForm(false);
       setEditingId(null);
       setForm(emptyForm);
-      void fetch('/api/admin/flyers')
-        .then((r) => (r.ok ? r.json() : []))
-        .then(setItems);
+      loadFlyers();
     }
   };
 
@@ -99,6 +113,15 @@ export default function AdminFlyersPage() {
           <Plus size={18} /> Add Flyer
         </button>
       </div>
+
+      {loadError && (
+        <div className="mb-6 px-4 py-3 rounded-lg bg-red-50 text-red-700 text-sm border border-red-200">
+          {loadError}{' '}
+          <a href="/admin/login" className="underline font-medium">
+            Go to login
+          </a>
+        </div>
+      )}
 
       {showForm && (
         <form onSubmit={handleSubmit} className="bg-white rounded-xl border p-6 mb-8 space-y-4">

@@ -11,7 +11,9 @@ SQLite does not work on Vercel (serverless functions have no persistent filesyst
    - **Pooled connection** (host contains `-pooler`) → `DATABASE_URL`
    - **Direct connection** (no `-pooler`) → `DIRECT_URL`
 
-Both URLs must include `?sslmode=require` at the end.
+Both URLs must include `?sslmode=require` at the end. Do **not** use `file:./dev.db` — that was SQLite and will not work.
+
+> **Vercel:** Add both variables under Project → Settings → Environment Variables for **Production**, **Preview**, and **Development**. If `DATABASE_URL` is missing or still set to `file:./dev.db`, you will see: *"the URL must start with the protocol postgresql://"*.
 
 Example:
 

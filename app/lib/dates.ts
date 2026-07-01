@@ -24,10 +24,14 @@ export function formatDisplayDate(date = new Date()): string {
   });
 }
 
-/** Flyers display on Wednesday (3), Friday (5), and Sunday (0). */
+/** Flyers display on Wednesday, Friday, and Sunday (UK time). */
 export function isFlyerDay(date = new Date()): boolean {
-  const day = date.getDay();
-  return day === 0 || day === 3 || day === 5;
+  const ukDay = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/London',
+    weekday: 'short',
+  }).format(date);
+
+  return ukDay === 'Sun' || ukDay === 'Wed' || ukDay === 'Fri';
 }
 
 export const BIBLE_PLAN_TYPES = ['DAILY', 'MONTHLY', 'YEARLY'] as const;
