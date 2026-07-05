@@ -19,15 +19,15 @@ model User {
 }
 
 model DailyDevotional {
-  id               String   @id @default(cuid())
-  date             String   @unique
-  dailyFocusImage  String
-  dailyFocus       String
-  dailyDeclaration String
-  verseText        String
-  verseReference   String
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id                     String   @id @default(cuid())
+  date                   String   @unique
+  dailyFocusImage        String
+  dailyFocus             String
+  dailyDeclarationImage  String
+  verseText              String
+  verseReference         String
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 }
 
 model Flyer {

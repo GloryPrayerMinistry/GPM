@@ -31,8 +31,7 @@ async function main() {
       date: todayKey(),
       dailyFocusImage: '/images/lion.jpeg',
       dailyFocus: 'Faith',
-      dailyDeclaration:
-        'Today I declare that my faith is anchored in Christ alone. I will not be moved by fear or doubt, for the God I serve is faithful. I walk by faith and not by sight, trusting that every promise in His Word is yes and amen.',
+      dailyDeclarationImage: '/images/worship.jpg',
       verseText:
         'Now faith is the substance of things hoped for, the evidence of things not seen.',
       verseReference: 'Hebrews 11:1',

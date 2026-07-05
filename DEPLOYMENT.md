@@ -64,6 +64,7 @@ git push origin main
 | `AUTH_SECRET` | Random secret (same as local) |
 | `ADMIN_EMAIL` | Your admin login email |
 | `ADMIN_PASSWORD` | Your admin login password |
+| `BLOB_READ_WRITE_TOKEN` | Auto-added when you connect Vercel Blob storage |
 
 5. Click **Deploy**.
 
@@ -82,16 +83,17 @@ This creates the admin user, sample products, devotionals, bible plans, and a fl
 
 Then log in at: `https://your-site.vercel.app/admin/login`
 
-## 6. Important: file uploads on Vercel
+## 6. Image uploads (Vercel Blob)
 
-Admin image uploads currently save to `/public/uploads/`. **This does not persist on Vercel** (serverless storage is ephemeral).
+Admin image uploads (daily devotionals, flyers, bible plans, products) use **Vercel Blob** in production so files persist across deploys.
 
-For production uploads, use one of:
+1. In your Vercel project, go to **Storage** → **Create Database/Store** → **Blob**.
+2. Connect the Blob store to this project — Vercel adds `BLOB_READ_WRITE_TOKEN` automatically.
+3. Redeploy after connecting.
 
-- [Vercel Blob](https://vercel.com/docs/storage/vercel-blob)
-- Cloudinary, AWS S3, or similar
+**Local development:** Without `BLOB_READ_WRITE_TOKEN`, uploads save to `public/uploads/` on your machine.
 
-Until then, you can use image URLs pointing to files in `/public/images/` or external URLs when adding content in admin.
+Until Blob is configured on Vercel, you can paste image URLs pointing to `/public/images/` or external hosts when adding content in admin.
 
 ## Troubleshooting
 

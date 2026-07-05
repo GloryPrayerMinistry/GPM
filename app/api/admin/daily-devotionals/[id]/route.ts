@@ -17,7 +17,7 @@ export async function PUT(
         date: body.date,
         dailyFocusImage: body.dailyFocusImage,
         dailyFocus: body.dailyFocus,
-        dailyDeclaration: body.dailyDeclaration,
+        dailyDeclarationImage: body.dailyDeclarationImage,
         verseText: body.verseText,
         verseReference: body.verseReference,
       },

@@ -76,8 +76,8 @@ interface HomePageProps {
 export default function HomePage({ devotional, flyer, showFlyer }: HomePageProps) {
   return (
     <div className="min-h-screen">
-      {showFlyer && flyer && <FlyerBanner flyer={flyer} />}
-      <DailyDevotionalCard devotional={devotional} compactTop={showFlyer && !!flyer} />
+      <DailyDevotionalCard devotional={devotional} />
+      {showFlyer && flyer && <FlyerBanner flyer={flyer} inline />}
       <Hero />
 
       {/* Mission — Matthew 28:18-20 */}

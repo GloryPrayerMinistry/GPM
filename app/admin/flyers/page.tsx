@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, Pencil, Trash2, Upload } from 'lucide-react';
+import { Plus, Pencil, Trash2 } from 'lucide-react';
+import ImageUploadField from '@/app/components/admin/ImageUploadField';
 
 interface Flyer {
   id: string;
@@ -23,7 +24,6 @@ export default function AdminFlyersPage() {
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [uploading, setUploading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
 
   const loadFlyers = () => {
@@ -46,20 +46,6 @@ export default function AdminFlyersPage() {
   useEffect(() => {
     loadFlyers();
   }, []);
-
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
-    const fd = new FormData();
-    fd.append('file', file);
-    const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
-    if (res.ok) {
-      const { url } = await res.json();
-      setForm((f) => ({ ...f, imageUrl: url }));
-    }
-    setUploading(false);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -130,16 +116,12 @@ export default function AdminFlyersPage() {
             <label className="block text-sm font-medium mb-1">Title</label>
             <input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" />
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Flyer Image</label>
-            <div className="flex gap-3 items-center">
-              <input required value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} className="flex-1 px-3 py-2 border rounded-lg text-sm" placeholder="/uploads/flyer.jpg" />
-              <label className="flex items-center gap-1.5 px-3 py-2 border rounded-lg text-sm cursor-pointer hover:bg-gray-50">
-                <Upload size={16} /> {uploading ? '…' : 'Upload'}
-                <input type="file" accept="image/*" className="hidden" onChange={handleUpload} />
-              </label>
-            </div>
-          </div>
+          <ImageUploadField
+            label="Flyer Image"
+            value={form.imageUrl}
+            onChange={(imageUrl) => setForm({ ...form, imageUrl })}
+            required
+          />
           <div>
             <label className="block text-sm font-medium mb-1">Link URL (optional)</label>
             <input value={form.linkUrl} onChange={(e) => setForm({ ...form, linkUrl: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" placeholder="https://..." />

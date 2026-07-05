@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
 import { requireAdmin } from '@/app/lib/auth';
+import { storeUploadedImage, UploadError } from '@/app/lib/storage';
 
 export async function POST(request: Request) {
   try {
@@ -10,27 +9,29 @@ export async function POST(request: Request) {
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
 
-    if (!file) {
+    if (!file || file.size === 0) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-    if (!allowed.includes(file.type)) {
-      return NextResponse.json({ error: 'Invalid file type' }, { status: 400 });
+    const url = await storeUploadedImage(file);
+
+    return NextResponse.json({ url });
+  } catch (error) {
+    if (error instanceof UploadError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
     }
-
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    const ext = file.name.split('.').pop() || 'jpg';
-    const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-
-    await mkdir(uploadDir, { recursive: true });
-    await writeFile(path.join(uploadDir, filename), buffer);
-
-    return NextResponse.json({ url: `/uploads/${filename}` });
-  } catch {
-    return NextResponse.json({ error: 'Upload failed' }, { status: 401 });
+    if (error instanceof Error && error.message === 'Unauthorized') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    console.error('Upload failed:', error);
+    return NextResponse.json(
+      {
+        error:
+          process.env.BLOB_READ_WRITE_TOKEN
+            ? 'Upload failed. Please try again.'
+            : 'Upload failed. For production, set BLOB_READ_WRITE_TOKEN on Vercel.',
+      },
+      { status: 500 }
+    );
   }
 }

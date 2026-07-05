@@ -14,3 +14,7 @@ export const CONTACT = {
   email: 'info@gloryprayerministry.org',
   phone: '(555) 123-4567',
 };
+
+/** Shown when a devotional image URL is missing or fails to load. */
+export const DEFAULT_DEVOTIONAL_FOCUS_IMAGE = '/images/lion.jpeg';
+export const DEFAULT_DEVOTIONAL_DECLARATION_IMAGE = '/images/worship.jpg';

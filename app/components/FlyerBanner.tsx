@@ -14,9 +14,11 @@ export interface FlyerData {
 
 interface FlyerBannerProps {
   flyer: FlyerData;
+  /** When true, flyer sits below another section — less top padding. */
+  inline?: boolean;
 }
 
-export default function FlyerBanner({ flyer }: FlyerBannerProps) {
+export default function FlyerBanner({ flyer, inline = false }: FlyerBannerProps) {
   const content = (
     <motion.div
       initial={{ opacity: 0, y: -12 }}
@@ -25,7 +27,7 @@ export default function FlyerBanner({ flyer }: FlyerBannerProps) {
       className="relative w-full overflow-hidden bg-navy"
     >
       <div className="absolute inset-0 pattern-cross opacity-10 pointer-events-none" />
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-6">
+      <div className={`relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 ${inline ? 'pt-8 pb-6' : 'pt-24 pb-6'}`}>
         <p className="text-center text-xs uppercase tracking-widest text-gold font-semibold mb-3">
           Ministry Flyer
         </p>
