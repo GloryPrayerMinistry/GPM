@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Upload, X, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { resolveMediaUrl } from '@/app/lib/mediaUrl';
 
 interface ImageUploadFieldProps {
   label: string;
@@ -84,7 +85,7 @@ export default function ImageUploadField({
         <div className="mb-3 relative w-full max-w-sm aspect-[4/3] rounded-xl overflow-hidden border border-gray-200 bg-gray-50 shadow-sm">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={value}
+            src={resolveMediaUrl(value)}
             alt={`${label} preview`}
             className="w-full h-full object-cover"
             onError={() => setError('Preview could not load. Check the URL or upload again.')}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { resolveMediaUrl } from '../lib/mediaUrl';
 
 interface PlaceholderImageProps {
   src: string;
@@ -19,6 +20,8 @@ export default function PlaceholderImage({
   width,
   height,
 }: PlaceholderImageProps) {
+  const resolvedSrc = resolveMediaUrl(src);
+
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
@@ -41,7 +44,7 @@ export default function PlaceholderImage({
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={src}
+        src={resolvedSrc}
         alt={alt}
         className={`object-cover ${className}`}
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
@@ -53,7 +56,7 @@ export default function PlaceholderImage({
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={src}
+      src={resolvedSrc}
       alt={alt}
       className={className}
       width={width}

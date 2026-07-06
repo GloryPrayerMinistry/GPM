@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image, { type ImageProps } from 'next/image';
 import { DEFAULT_DEVOTIONAL_FOCUS_IMAGE } from '../lib/constants';
+import { resolveMediaUrl } from '../lib/mediaUrl';
 
 type DevotionalImageProps = Omit<ImageProps, 'src' | 'onError'> & {
   src?: string | null;
@@ -15,7 +16,7 @@ export default function DevotionalImage({
   fallback = DEFAULT_DEVOTIONAL_FOCUS_IMAGE,
   ...props
 }: DevotionalImageProps) {
-  const initial = src?.trim() || fallback;
+  const initial = resolveMediaUrl(src?.trim() || '') || fallback;
   const [imgSrc, setImgSrc] = useState(initial);
 
   return (

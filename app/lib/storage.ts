@@ -1,6 +1,7 @@
 import { put } from '@vercel/blob';
 import { mkdir, writeFile } from 'fs/promises';
 import path from 'path';
+import { toMediaUrl } from './mediaUrl';
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 const MAX_BYTES = 5 * 1024 * 1024;
@@ -37,16 +38,16 @@ async function storeLocally(file: File, filename: string): Promise<string> {
   await mkdir(uploadDir, { recursive: true });
   await writeFile(path.join(uploadDir, filename), buffer);
 
-  return `/uploads/${filename}`;
+  return toMediaUrl(`uploads/${filename}`);
 }
 
 async function storeOnBlob(file: File, filename: string): Promise<string> {
-  const blob = await put(`uploads/${filename}`, file, {
-    access: 'public',
+  await put(`uploads/${filename}`, file, {
+    access: 'private',
     addRandomSuffix: false,
   });
 
-  return blob.url;
+  return toMediaUrl(`uploads/${filename}`);
 }
 /**
  * Persists an uploaded image. Uses Vercel Blob in production when

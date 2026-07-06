@@ -9,6 +9,7 @@ import {
   formatDisplayDate,
   type BiblePlanType,
 } from '../lib/dates';
+import { resolveMediaUrl } from '../lib/mediaUrl';
 
 interface BiblePlan {
   id: string;
@@ -132,7 +133,7 @@ export default function BiblePlanPageClient() {
                   )}
                   <div className="relative aspect-[3/4] max-h-[600px] rounded-xl overflow-hidden bg-cream border border-cream-dark mb-6">
                     <Image
-                      src={plan.imageUrl}
+                      src={resolveMediaUrl(plan.imageUrl)}
                       alt={plan.title || `${activeTab} Bible Plan`}
                       fill
                       className="object-contain"

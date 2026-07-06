@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
+import { resolveMediaUrl } from '../lib/mediaUrl';
 
 export interface FlyerData {
   id: string;
@@ -33,7 +34,7 @@ export default function FlyerBanner({ flyer, inline = false }: FlyerBannerProps)
         </p>
         <div className="relative aspect-[16/9] sm:aspect-[21/9] max-h-[420px] rounded-2xl overflow-hidden shadow-2xl border border-gold/25 mx-auto">
           <Image
-            src={flyer.imageUrl}
+            src={resolveMediaUrl(flyer.imageUrl)}
             alt={flyer.title}
             fill
             className="object-contain bg-navy-light"
