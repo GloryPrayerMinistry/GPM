@@ -2,6 +2,11 @@
 
 const RAY_COUNT = 32;
 
+/** Round coords so SSR and browser produce identical SVG path strings. */
+function roundCoord(n: number): number {
+  return Math.round(n * 1e4) / 1e4;
+}
+
 function wedgePath(
   cx: number,
   cy: number,
@@ -11,15 +16,17 @@ function wedgePath(
   endDeg: number
 ): string {
   const toRad = (deg: number) => (deg * Math.PI) / 180;
-  const x1 = cx + innerR * Math.cos(toRad(startDeg));
-  const y1 = cy + innerR * Math.sin(toRad(startDeg));
-  const x2 = cx + outerR * Math.cos(toRad(startDeg));
-  const y2 = cy + outerR * Math.sin(toRad(startDeg));
-  const x3 = cx + outerR * Math.cos(toRad(endDeg));
-  const y3 = cy + outerR * Math.sin(toRad(endDeg));
-  const x4 = cx + innerR * Math.cos(toRad(endDeg));
-  const y4 = cy + innerR * Math.sin(toRad(endDeg));
-  return `M ${x1} ${y1} L ${x2} ${y2} A ${outerR} ${outerR} 0 0 1 ${x3} ${y3} L ${x4} ${y4} A ${innerR} ${innerR} 0 0 0 ${x1} ${y1} Z`;
+  const x1 = roundCoord(cx + innerR * Math.cos(toRad(startDeg)));
+  const y1 = roundCoord(cy + innerR * Math.sin(toRad(startDeg)));
+  const x2 = roundCoord(cx + outerR * Math.cos(toRad(startDeg)));
+  const y2 = roundCoord(cy + outerR * Math.sin(toRad(startDeg)));
+  const x3 = roundCoord(cx + outerR * Math.cos(toRad(endDeg)));
+  const y3 = roundCoord(cy + outerR * Math.sin(toRad(endDeg)));
+  const x4 = roundCoord(cx + innerR * Math.cos(toRad(endDeg)));
+  const y4 = roundCoord(cy + innerR * Math.sin(toRad(endDeg)));
+  const rOuter = roundCoord(outerR);
+  const rInner = roundCoord(innerR);
+  return `M ${x1} ${y1} L ${x2} ${y2} A ${rOuter} ${rOuter} 0 0 1 ${x3} ${y3} L ${x4} ${y4} A ${rInner} ${rInner} 0 0 0 ${x1} ${y1} Z`;
 }
 
 interface HeroRaysProps {
