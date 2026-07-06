@@ -42,7 +42,7 @@ async function storeLocally(file: File, filename: string): Promise<string> {
 
 async function storeOnBlob(file: File, filename: string): Promise<string> {
   const blob = await put(`uploads/${filename}`, file, {
-    access: 'private',
+    access: 'public',
     addRandomSuffix: false,
   });
 
