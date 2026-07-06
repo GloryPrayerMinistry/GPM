@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import SectionHeading from '../components/SectionHeading';
 import MatthewVerse from '../components/MatthewVerse';
+import MinistryCoverflowCarousel from '../components/MinistryCoverflowCarousel';
 import PlaceholderImage from '../components/PlaceholderImage';
+import { MINISTRY_CAROUSEL_IMAGES } from '../lib/ministryImages';
 
 export default function AboutPage() {
   return (
@@ -27,7 +29,7 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg md:text-xl text-cream/75 max-w-2xl mx-auto leading-relaxed"
           >
-            A registered charity dedicated to prayer, discipleship, outreach, and
+            A charity dedicated to prayer, discipleship, outreach, and
             glorifying God through faithful service.
           </motion.p>
         </div>
@@ -37,21 +39,15 @@ export default function AboutPage() {
       <section className="py-20 md:py-28 bg-cream-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-  initial={{ opacity: 0, x: -30 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.6 }}
-  className="rounded-2xl overflow-hidden shadow-xl aspect-[4/3]"
->
-  <PlaceholderImage
-    src="/images/ministry-2.jpg"
-    alt="Glory Prayer Ministry team"
-    width={1200}
-    height={800}
-    className="w-full h-full object-cover"
-  />
-</motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="rounded-2xl aspect-[4/3] border-2 border-transparent overflow-hidden"
+            >
+              <MinistryCoverflowCarousel images={MINISTRY_CAROUSEL_IMAGES} />
+            </motion.div>
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}

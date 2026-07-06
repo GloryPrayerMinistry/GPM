@@ -11,8 +11,8 @@ export const MINISTRY_NAME = 'Glory Prayer Ministry';
 export const CHARITY_NUMBER = '1218393';
 
 export const CONTACT = {
-  email: 'info@gloryprayerministry.org',
-  phone: '(555) 123-4567',
+  email: 'gloryprayerministry2014@gmail.com',
+  phone: '+44 7533 705221',
 };
 
 /** Shown when a devotional image URL is missing or fails to load. */

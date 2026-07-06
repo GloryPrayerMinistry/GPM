@@ -42,12 +42,12 @@ async function storeLocally(file: File, filename: string): Promise<string> {
 
 async function storeOnBlob(file: File, filename: string): Promise<string> {
   const blob = await put(`uploads/${filename}`, file, {
-    access: 'public',
+    access: 'private',
     addRandomSuffix: false,
   });
+
   return blob.url;
 }
-
 /**
  * Persists an uploaded image. Uses Vercel Blob in production when
  * BLOB_READ_WRITE_TOKEN is set; otherwise writes to public/uploads (local dev).

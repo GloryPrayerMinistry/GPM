@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import Hero from './Hero';
 import SectionHeading from './SectionHeading';
-import MatthewVerse from './MatthewVerse';
+import MissionSection from './MissionSection';
 import PlaceholderImage from './PlaceholderImage';
 import DailyDevotionalCard, { type DailyDevotionalData } from './DailyDevotionalCard';
 import FlyerBanner, { type FlyerData } from './FlyerBanner';
@@ -62,7 +62,7 @@ const upcomingEvents = [
   },
   {
     title: 'Community Outreach Day',
-    date: 'First Saturday of Each Month',
+    date: 'Scheduled as Needed',
     description: 'Serve alongside us as we reach out to those in need in our community.',
   },
 ];
@@ -80,16 +80,7 @@ export default function HomePage({ devotional, flyer, showFlyer }: HomePageProps
       {showFlyer && flyer && <FlyerBanner flyer={flyer} inline />}
       <Hero />
 
-      {/* Mission — Matthew 28:18-20 */}
-      <section className="py-20 md:py-28 bg-cream-gradient pattern-dots">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
-            title="Our Mission"
-            subtitle="Rooted in the Great Commission, we go forth to make disciples of all nations."
-          />
-          <MatthewVerse variant="card" />
-        </div>
-      </section>
+      <MissionSection />
 
       {/* Ministry Areas */}
       <section className="py-20 md:py-28 bg-white">
@@ -128,66 +119,91 @@ export default function HomePage({ devotional, flyer, showFlyer }: HomePageProps
         </div>
       </section>
 
-      {/* Our Calling */}
-      <section className="py-20 md:py-28 bg-navy-gradient relative overflow-hidden">
-        <div className="absolute inset-0 pattern-cross opacity-30" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <Sparkles className="text-gold" size={28} />
-                <span className="text-gold-light uppercase tracking-widest text-sm font-semibold">
-                  Our Calling
-                </span>
-              </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-cream mb-6">
-                Called to Glorify God
-              </h2>
-              <p className="text-cream/75 text-lg leading-relaxed mb-6">
-                Glory Prayer Ministry exists to share the Gospel, encourage prayer,
-                build disciples, support communities, and glorify God in all that we do.
-                As a registered charity, we are committed to serving with integrity,
-                compassion, and unwavering faith.
-              </p>
-              <p className="text-cream/60 leading-relaxed mb-8">
-                We believe that through prayer, the teaching of God&apos;s Word, and
-                practical acts of service, lives are transformed and communities are
-                renewed by the power of the Holy Spirit.
-              </p>
-              <Link href="/about">
-                <motion.span
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-block px-8 py-3 rounded-xl font-semibold btn-primary"
-                >
-                  Learn More About Us
-                </motion.span>
-              </Link>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative h-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl"
-            >
-              <PlaceholderImage
-                src="/images/ministry-1.jpg"
-                alt="Glory Prayer Ministry"
-                fill
-                className="rounded-2xl"
-              />
-              <div className="absolute inset-0 border-2 border-gold/20 rounded-2xl" />
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <section className="py-20 md:py-28 relative overflow-hidden bg-navy-gradient">
 
+{/* Base gradient layer */}
+<div className="absolute inset-0 bg-gradient-to-br from-navy via-[#0b1b3a] to-black" />
+
+{/* Pattern overlay */}
+<div className="absolute inset-0 pattern-cross opacity-20" />
+
+{/* Yellow glow (top-left) */}
+<div className="absolute top-[-120px] left-[-100px] w-[450px] h-[450px] bg-yellow-400/15 blur-3xl rounded-full" />
+
+{/* Blue glow (bottom-right) */}
+<div className="absolute bottom-[-140px] right-[-120px] w-[500px] h-[500px] bg-blue-500/15 blur-3xl rounded-full" />
+
+{/* Content container */}
+<div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+  <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+    {/* LEFT CONTENT */}
+    <motion.div
+      initial={{ opacity: 0, x: -30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+    >
+      <div className="flex items-center gap-3 mb-6">
+        <Sparkles className="text-gold" size={28} />
+        <span className="text-gold-light uppercase tracking-widest text-sm font-semibold">
+          Our Calling
+        </span>
+      </div>
+
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-cream mb-6">
+        Called to Glorify God
+      </h2>
+
+      <p className="text-cream/75 text-lg leading-relaxed mb-6">
+        Glory Prayer Ministry exists to share the good news, encourage prayer,
+        build disciples, support communities, and glorify God in all that we do.
+        We are committed to serving with integrity, compassion, and unwavering faith.
+      </p>
+
+      <p className="text-cream/60 leading-relaxed mb-8">
+        We believe that through prayer, the teaching of God's Word, and practical
+        acts of service, lives are transformed and communities are renewed by the
+        power of the Holy Spirit.
+      </p>
+
+      <Link href="/about">
+        <motion.span
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="inline-block px-8 py-3 rounded-xl font-semibold btn-primary"
+        >
+          Learn More About Us
+        </motion.span>
+      </Link>
+    </motion.div>
+
+    {/* RIGHT IMAGE */}
+    <motion.div
+      initial={{ opacity: 0, x: 30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="relative h-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl"
+    >
+      <PlaceholderImage
+        src="/images/ctg.png"
+        alt="Glory Prayer Ministry"
+        fill
+        className="rounded-2xl object-cover"
+      />
+
+      {/* Image soft overlay for polish */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+
+      {/* Border glow */}
+      <div className="absolute inset-0 border-2 border-yellow-400/20 rounded-2xl" />
+    </motion.div>
+
+  </div>
+</div>
+</section>
       {/* Upcoming Events */}
       <section className="py-20 md:py-28 bg-cream-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -263,7 +279,7 @@ export default function HomePage({ devotional, flyer, showFlyer }: HomePageProps
               className="relative h-72 md:h-80 rounded-2xl overflow-hidden shadow-xl order-2 lg:order-1"
             >
               <PlaceholderImage
-                src="/images/shop-placeholder.jpg"
+                src="/images/shop.png"
                 alt="Shop with Purpose"
                 fill
                 className="rounded-2xl"

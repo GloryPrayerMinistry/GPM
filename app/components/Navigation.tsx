@@ -100,7 +100,7 @@ export default function Navigation() {
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex px-5 py-2.5 rounded-xl text-sm font-semibold btn-primary shadow-md"
               >
-                Donate
+                🖤 Donate
               </motion.span>
             </Link>
           </div>

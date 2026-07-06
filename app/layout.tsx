@@ -18,7 +18,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Glory Prayer Ministry — Prayer, Discipleship & Outreach",
   description:
-    "Glory Prayer Ministry is a registered charity dedicated to prayer, worship, discipleship, outreach, and transforming lives through the Word of God.",
+    "Glory Prayer Ministry is a charity dedicated to prayer, worship, discipleship, outreach, and transforming lives through the Word of God.",
 };
 
 export default function RootLayout({
