@@ -31,13 +31,15 @@ model DailyDevotional {
 }
 
 model Flyer {
-  id        String   @id @default(cuid())
-  title     String
-  imageUrl  String
-  linkUrl   String?
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  title       String
+  imageUrl    String
+  description String?
+  linkUrl     String?
+  ctaLabel    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model BiblePlan {
