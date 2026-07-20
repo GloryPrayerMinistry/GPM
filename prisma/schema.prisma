@@ -19,15 +19,15 @@ model User {
 }
 
 model DailyDevotional {
-  id                     String   @id @default(cuid())
-  date                   String   @unique
-  dailyFocusImage        String
-  dailyFocus             String
-  dailyDeclarationImage  String
-  verseText              String
-  verseReference         String
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  id                    String   @id @default(cuid())
+  date                  String   @unique
+  dailyFocusImage       String
+  dailyFocus            String
+  verseText             String
+  verseReference        String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  dailyDeclarationImage String
 }
 
 model Flyer {
@@ -75,4 +75,18 @@ model Testimony {
   status     String   @default("PENDING")
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+model Prayer {
+  id          String   @id @default(cuid())
+  title       String
+  category    String
+  description String
+  scripture   String
+  text        String
+  isActive    Boolean  @default(true)
+  isPinned    Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

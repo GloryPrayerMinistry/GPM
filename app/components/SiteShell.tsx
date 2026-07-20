@@ -16,7 +16,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <CartProvider>
       <Navigation />
-      <main>{children}</main>
+      <main className="site-main">{children}</main>
       <Footer />
     </CartProvider>
   );

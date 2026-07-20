@@ -8,13 +8,7 @@ import ProductCard from '../components/ProductCard';
 import SectionHeading from '../components/SectionHeading';
 import { ShoppingCart, X, Plus, Minus } from 'lucide-react';
 
-const categories = [
-  'All',
-  'Books & Devotionals',
-  'Apparel',
-  'Prayer Resources',
-  'Gifts',
-];
+const categories = ['All', 'Apparel', 'Gifts'];
 
 export default function Shop() {
   const { cart, getTotal, clearCart, updateQuantity, removeFromCart } = useCart();
@@ -39,7 +33,7 @@ export default function Shop() {
       : products.filter((p) => p.category === activeCategory);
 
   return (
-    <div className="min-h-screen pt-20 bg-cream-gradient">
+    <div className="min-h-screen bg-cream-gradient">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <SectionHeading
           title="Shop with Purpose"

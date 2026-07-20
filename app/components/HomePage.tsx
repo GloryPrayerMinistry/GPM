@@ -16,7 +16,7 @@ import SectionHeading from './SectionHeading';
 import MissionSection from './MissionSection';
 import PlaceholderImage from './PlaceholderImage';
 import DailyDevotionalCard, { type DailyDevotionalData } from './DailyDevotionalCard';
-import FlyerBanner, { type FlyerData } from './FlyerBanner';
+import FlyerModal, { type FlyerData } from './FlyerModal';
 
 const ministryAreas = [
   {
@@ -24,28 +24,28 @@ const ministryAreas = [
     description:
       'Gathering together in prayer and worship, seeking the presence of God and interceding for one another with faith and expectation.',
     icon: Heart,
-    image: '/images/prayer.jpg',
+    image: '/images/prayernworship.jpeg',
   },
   {
     title: 'Discipleship & Teaching',
     description:
       'Teaching the Word of God with clarity and compassion, helping believers grow in faith, knowledge, and obedience to Christ.',
     icon: BookOpen,
-    image: '/images/worship.jpg',
+    image: '/images/ship.jpeg',
   },
   {
     title: 'Outreach & Charity Work',
     description:
       'Serving communities with practical support, sharing the Gospel, and demonstrating the love of Christ through action.',
     icon: HandHeart,
-    image: '/images/outreach.jpg',
+    image: '/images/outreachnwork.jpeg',
   },
   {
     title: 'Community Support',
     description:
       'Building a caring community where people find encouragement, fellowship, and a place to belong in the family of God.',
     icon: Users,
-    image: '/images/community.jpg',
+    image: '/images/comunitysupport.jpeg',
   },
 ];
 
@@ -77,7 +77,7 @@ export default function HomePage({ devotional, flyer, showFlyer }: HomePageProps
   return (
     <div className="min-h-screen">
       <DailyDevotionalCard devotional={devotional} />
-      {showFlyer && flyer && <FlyerBanner flyer={flyer} inline />}
+      <FlyerModal flyer={flyer ?? null} show={!!showFlyer && !!flyer} />
       <Hero />
 
       <MissionSection />
@@ -252,7 +252,7 @@ export default function HomePage({ devotional, flyer, showFlyer }: HomePageProps
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <SectionHeading
             title="Support the Mission"
-            subtitle="Every gift helps us continue the work of prayer, discipleship, outreach, and service."
+            subtitle="Every gift makes a difference. Your generosity helps us share the Gospel, strengthen believers, serve communities, and bring hope through the love of Jesus Christ."
             light
           />
           <Link href="/donate">
@@ -303,7 +303,7 @@ export default function HomePage({ devotional, flyer, showFlyer }: HomePageProps
               </h2>
               <p className="text-navy/70 text-lg leading-relaxed mb-8">
                 Every purchase helps support the mission and outreach of Glory Prayer
-                Ministry. Browse books, devotionals, apparel, and prayer resources
+                Ministry. Browse ministry bands, prayer shawls, brooches, and coins
                 crafted with faith and purpose.
               </p>
               <Link href="/shop">

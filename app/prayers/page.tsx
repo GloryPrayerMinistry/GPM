@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Heart, Users } from 'lucide-react';
@@ -8,16 +8,27 @@ import SectionHeading from '../components/SectionHeading';
 import PrayerSearch from '../components/PrayerSearch';
 import PrayerCategoryFilter from '../components/PrayerCategoryFilter';
 import PrayerCard from '../components/PrayerCard';
-import { PRAYERS } from '../lib/prayers';
+import type { Prayer } from '../lib/prayers';
+import { partitionPrayers, sortPrayers } from '../lib/prayers';
 
 export default function PrayersPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
+  const [prayers, setPrayers] = useState<Prayer[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/prayers')
+      .then((res) => res.json())
+      .then((data) => setPrayers(data))
+      .catch(() => setPrayers([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   const filteredPrayers = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
 
-    return PRAYERS.filter((prayer) => {
+    const matches = prayers.filter((prayer) => {
       const matchesCategory =
         activeCategory === 'all' || prayer.category === activeCategory;
 
@@ -30,10 +41,25 @@ export default function PrayersPage() {
 
       return matchesCategory && matchesSearch;
     });
-  }, [searchQuery, activeCategory]);
+
+    return sortPrayers(matches);
+  }, [prayers, searchQuery, activeCategory]);
+
+  const { pinned: pinnedPrayers, regular: regularPrayers } = useMemo(
+    () => partitionPrayers(filteredPrayers),
+    [filteredPrayers]
+  );
+
+  const renderPrayerGrid = (items: Prayer[], startIndex = 0) => (
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {items.map((prayer, index) => (
+        <PrayerCard key={prayer.id} prayer={prayer} index={startIndex + index} />
+      ))}
+    </div>
+  );
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen">
       {/* Hero */}
       <section className="py-16 md:py-24 bg-navy-gradient relative overflow-hidden">
         <div className="absolute inset-0 pattern-cross opacity-20" />
@@ -97,11 +123,42 @@ export default function PrayersPage() {
       {/* Prayer library */}
       <section className="py-16 md:py-24 bg-cream-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredPrayers.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {filteredPrayers.map((prayer, index) => (
-                <PrayerCard key={prayer.id} prayer={prayer} index={index} />
-              ))}
+          {loading ? (
+            <p className="text-center text-navy/50 py-16">Loading prayers…</p>
+          ) : filteredPrayers.length > 0 ? (
+            <div className="space-y-14 md:space-y-16">
+              {pinnedPrayers.length > 0 && (
+                <div>
+                  <div className="text-center mb-8 md:mb-10">
+                    <p className="text-xs uppercase tracking-[0.2em] text-gold font-semibold mb-2">
+                      Featured
+                    </p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-navy">
+                      Ministry Prayers
+                    </h2>
+                    <p className="text-navy/60 text-sm md:text-base mt-2 max-w-2xl mx-auto">
+                      Prayers added by Glory Prayer Ministry — shown first for easy access.
+                    </p>
+                  </div>
+                  {renderPrayerGrid(pinnedPrayers, 0)}
+                </div>
+              )}
+
+              {regularPrayers.length > 0 && (
+                <div>
+                  {pinnedPrayers.length > 0 && (
+                    <div className="text-center mb-8 md:mb-10 pt-2 border-t border-cream-dark">
+                      <p className="text-xs uppercase tracking-[0.2em] text-navy/45 font-semibold mb-2 mt-8">
+                        Library
+                      </p>
+                      <h2 className="text-2xl md:text-3xl font-bold text-navy">
+                        All Prayers
+                      </h2>
+                    </div>
+                  )}
+                  {renderPrayerGrid(regularPrayers, pinnedPrayers.length)}
+                </div>
+              )}
             </div>
           ) : (
             <div className="text-center py-16">

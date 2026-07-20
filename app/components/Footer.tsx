@@ -18,7 +18,7 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { name: 'Facebook', href: '#', Icon: Facebook },
+  { name: 'Facebook', href: 'https://www.facebook.com/profile.php?id=100064364125073', Icon: Facebook },
   { name: 'Instagram', href: '#', Icon: Instagram },
   { name: 'YouTube', href: '#', Icon: Youtube },
   { name: 'Twitter', href: '#', Icon: Twitter },
@@ -111,6 +111,8 @@ export default function Footer() {
                   <motion.a
                     key={social.name}
                     href={social.href}
+                    target={social.href.startsWith('http') ? '_blank' : undefined}
+                    rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     whileHover={{ scale: 1.15 }}
                     whileTap={{ scale: 0.95 }}
                     className="p-2.5 rounded-lg bg-white/5 text-cream/70 hover:text-gold-light hover:bg-white/10 transition-colors"

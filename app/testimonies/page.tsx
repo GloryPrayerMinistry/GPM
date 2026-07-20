@@ -43,7 +43,7 @@ export default function TestimoniesPage() {
   };
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen">
       <section className="py-16 md:py-24 bg-navy-gradient relative overflow-hidden">
         <div className="absolute inset-0 pattern-cross opacity-20" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

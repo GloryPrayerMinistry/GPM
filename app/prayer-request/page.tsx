@@ -7,7 +7,7 @@ import { CONTACT } from '../lib/constants';
 
 export default function PrayerRequestPage() {
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen">
       {/* Hero */}
       <section className="py-16 md:py-24 bg-navy-gradient relative overflow-hidden">
         <div className="absolute inset-0 pattern-cross opacity-20" />

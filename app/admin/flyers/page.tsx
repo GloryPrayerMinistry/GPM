@@ -8,14 +8,18 @@ interface Flyer {
   id: string;
   title: string;
   imageUrl: string;
+  description: string | null;
   linkUrl: string | null;
+  ctaLabel: string | null;
   isActive: boolean;
 }
 
 const emptyForm = {
   title: '',
   imageUrl: '',
+  description: '',
   linkUrl: '',
+  ctaLabel: '',
   isActive: true,
 };
 
@@ -70,7 +74,9 @@ export default function AdminFlyersPage() {
     setForm({
       title: item.title,
       imageUrl: item.imageUrl,
+      description: item.description || '',
       linkUrl: item.linkUrl || '',
+      ctaLabel: item.ctaLabel || '',
       isActive: item.isActive,
     });
     setEditingId(item.id);
@@ -123,8 +129,22 @@ export default function AdminFlyersPage() {
             required
           />
           <div>
-            <label className="block text-sm font-medium mb-1">Link URL (optional)</label>
+            <label className="block text-sm font-medium mb-1">Description (optional)</label>
+            <textarea
+              value={form.description}
+              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              rows={3}
+              className="w-full px-3 py-2 border rounded-lg text-sm"
+              placeholder="Short message shown below the flyer image"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">CTA Link URL (optional)</label>
             <input value={form.linkUrl} onChange={(e) => setForm({ ...form, linkUrl: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" placeholder="https://..." />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">CTA Button Label (optional)</label>
+            <input value={form.ctaLabel} onChange={(e) => setForm({ ...form, ctaLabel: e.target.value })} className="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Learn More" />
           </div>
           <label className="flex items-center gap-2 text-sm">
             <input type="checkbox" checked={form.isActive} onChange={(e) => setForm({ ...form, isActive: e.target.checked })} />

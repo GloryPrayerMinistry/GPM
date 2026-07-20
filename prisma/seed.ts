@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-
-const prisma = new PrismaClient();
+import { prisma } from '../app/lib/db';
+import { PRAYERS } from '../app/lib/prayers';
 
 function todayKey() {
   const d = new Date();
@@ -40,79 +39,59 @@ async function main() {
 
   const products = [
     {
-      name: 'Daily Devotional Guide',
-      price: 19.99,
-      image: 'BookOpen',
-      imageUrl: '/images/shop-placeholder.jpg',
-      category: 'Books & Devotionals',
+      name: 'Ministry Bands',
+      price: 12.99,
+      image: 'CircleDot',
+      imageUrl: '/images/bands.jpeg',
+      category: 'Apparel',
       description:
-        'A comprehensive 365-day devotional guide to strengthen your faith journey.',
+        'Wearable reminder of faith and unity — ministry bands supporting Glory Prayer Ministry outreach.',
     },
     {
-      name: 'Prayer Journal',
-      price: 24.99,
-      image: 'BookMarked',
-      imageUrl: '/images/shop-placeholder.jpg',
-      category: 'Prayer Resources',
-      description:
-        "Beautifully designed prayer journal to document your prayers and God's answers.",
-    },
-    {
-      name: 'Scripture Cards Set',
-      price: 14.99,
-      image: 'Layers',
-      imageUrl: '/images/shop-placeholder.jpg',
-      category: 'Gifts',
-      description:
-        '50 inspirational scripture cards with beautiful designs for daily encouragement.',
-    },
-    {
-      name: 'Worship Music Collection',
-      price: 29.99,
-      image: 'Music',
-      imageUrl: '/images/shop-placeholder.jpg',
-      category: 'Gifts',
-      description: 'Curated collection of worship songs and hymns on digital format.',
-    },
-    {
-      name: 'Bible Study Workbook',
-      price: 22.99,
-      image: 'BookText',
-      imageUrl: '/images/shop-placeholder.jpg',
-      category: 'Books & Devotionals',
-      description: 'Interactive workbook for group or individual Bible study sessions.',
-    },
-    {
-      name: 'Prayer Shawl',
+      name: 'Prayer Shawls',
       price: 49.99,
       image: 'Package',
-      imageUrl: '/images/shop-placeholder.jpg',
+      imageUrl: '/images/shawk.jpeg',
       category: 'Apparel',
-      description: 'Handcrafted prayer shawl made with love and blessed by our ministry.',
+      description:
+        'Handcrafted prayer shawls for comfort in prayer, made with love and blessed by our ministry.',
     },
     {
-      name: 'Faith Bracelet',
-      price: 18.99,
-      image: 'CircleDot',
-      imageUrl: '/images/shop-placeholder.jpg',
+      name: 'Ministry Brooch',
+      price: 14.99,
+      image: 'Gem',
+      imageUrl: '/images/broocha.jpeg',
       category: 'Gifts',
       description:
-        "Elegant faith-themed bracelet as a reminder of God's love and presence.",
+        'An elegant ministry brooch to wear as a symbol of faith and belonging in Christ.',
     },
     {
-      name: 'Inspirational Wall Art',
-      price: 34.99,
-      image: 'ImageIcon',
-      imageUrl: '/images/shop-placeholder.jpg',
+      name: 'Ministry Coins',
+      price: 9.99,
+      image: 'Coins',
+      imageUrl: '/images/coins.jpeg',
       category: 'Gifts',
       description:
-        'Beautiful scripture-based wall art print to inspire your home or office.',
+        'Commemorative ministry coins — a meaningful keepsake and gift of encouragement in faith.',
     },
   ];
 
-  const count = await prisma.product.count();
-  if (count === 0) {
-    await prisma.product.createMany({ data: products });
+  await prisma.product.deleteMany({});
+  await prisma.product.createMany({ data: products });
+
+  const prayerCount = await prisma.prayer.count();
+  if (prayerCount === 0) {
+    await prisma.prayer.createMany({
+      data: PRAYERS.map((prayer, index) => ({
+        title: prayer.title,
+        category: prayer.category,
+        description: prayer.description,
+        scripture: prayer.scripture,
+        text: prayer.text,
+        sortOrder: index,
+        isActive: true,
+      })),
+    });
   }
 
   const testimonyCount = await prisma.testimony.count();

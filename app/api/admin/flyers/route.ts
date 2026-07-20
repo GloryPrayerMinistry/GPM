@@ -21,7 +21,9 @@ export async function POST(request: Request) {
       data: {
         title: body.title,
         imageUrl: body.imageUrl,
+        description: body.description || null,
         linkUrl: body.linkUrl || null,
+        ctaLabel: body.ctaLabel || null,
         isActive: body.isActive ?? true,
       },
     });

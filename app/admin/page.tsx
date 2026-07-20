@@ -2,11 +2,12 @@ export const dynamic = 'force-dynamic';
 
 import Link from 'next/link';
 import { prisma } from '@/app/lib/db';
-import { BookOpen, ShoppingBag, MessageSquareQuote, Clock, ImageIcon, CalendarRange } from 'lucide-react';
+import { BookOpen, ShoppingBag, MessageSquareQuote, Clock, ImageIcon, CalendarRange, HeartHandshake } from 'lucide-react';
 
 export default async function AdminDashboard() {
   const [
     devotionalCount,
+    prayerCount,
     biblePlanCount,
     flyerCount,
     productCount,
@@ -14,6 +15,7 @@ export default async function AdminDashboard() {
     approvedTestimonies,
   ] = await Promise.all([
     prisma.dailyDevotional.count(),
+    prisma.prayer.count({ where: { isActive: true } }),
     prisma.biblePlan.count(),
     prisma.flyer.count({ where: { isActive: true } }),
     prisma.product.count(),
@@ -28,6 +30,13 @@ export default async function AdminDashboard() {
       icon: BookOpen,
       href: '/admin/daily-devotionals',
       color: 'bg-blue-50 text-blue-700',
+    },
+    {
+      label: 'Active Prayers',
+      value: prayerCount,
+      icon: HeartHandshake,
+      href: '/admin/prayers',
+      color: 'bg-rose-50 text-rose-700',
     },
     {
       label: 'Bible Plans',

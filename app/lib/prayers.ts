@@ -5,6 +5,35 @@ export interface Prayer {
   description: string;
   scripture: string;
   text: string;
+  isPinned?: boolean;
+  sortOrder?: number;
+  createdAt?: string;
+}
+
+/** Pinned admin prayers first, then the rest by sort order and title. */
+export function sortPrayers<T extends Prayer>(prayers: T[]): T[] {
+  return [...prayers].sort((a, b) => {
+    const aPinned = a.isPinned ? 1 : 0;
+    const bPinned = b.isPinned ? 1 : 0;
+    if (bPinned !== aPinned) return bPinned - aPinned;
+
+    const sortDiff = (a.sortOrder ?? 0) - (b.sortOrder ?? 0);
+    if (sortDiff !== 0) return sortDiff;
+
+    if (a.createdAt && b.createdAt) {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    }
+
+    return a.title.localeCompare(b.title);
+  });
+}
+
+export function partitionPrayers<T extends Prayer>(prayers: T[]) {
+  const sorted = sortPrayers(prayers);
+  return {
+    pinned: sorted.filter((p) => p.isPinned),
+    regular: sorted.filter((p) => !p.isPinned),
+  };
 }
 
 export const PRAYER_CATEGORIES = [
@@ -31,6 +60,7 @@ export const PRAYER_CATEGORIES = [
   { id: 'salvation', label: 'Salvation' },
 ] as const;
 
+/** Default prayer library — imported by db seed when the Prayer table is empty. */
 export const PRAYERS: Prayer[] = [
   {
     id: 'morning',

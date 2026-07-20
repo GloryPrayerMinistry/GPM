@@ -11,11 +11,13 @@ import {
   ExternalLink,
   ImageIcon,
   CalendarRange,
+  HeartHandshake,
 } from 'lucide-react';
 
 const sidebarLinks = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/daily-devotionals', label: 'Daily Devotionals', icon: BookOpen },
+  { href: '/admin/prayers', label: 'Prayers', icon: HeartHandshake },
   { href: '/admin/bible-plans', label: 'Bible Plans', icon: CalendarRange },
   { href: '/admin/flyers', label: 'Flyers', icon: ImageIcon },
   { href: '/admin/products', label: 'Shop Products', icon: ShoppingBag },

@@ -17,6 +17,13 @@
   --burgundy: #6b2737;
   --purple: #4a306d;
   --purple-light: #6b4d8a;
+  --header-height: 4rem;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 4.5rem;
+  }
 }
 
 @theme inline {
@@ -49,6 +56,10 @@ html {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-playfair), Georgia, serif;
+}
+
+.site-main {
+  padding-top: var(--header-height);
 }
 
 /* Custom scrollbar */

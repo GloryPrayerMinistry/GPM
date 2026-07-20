@@ -106,7 +106,7 @@ export default function DailyDevotionalCard({ devotional }: DailyDevotionalCardP
 
   if (!devotional) {
     return (
-      <section className="relative pt-24 pb-12 md:pb-16 px-4 sm:px-6 lg:px-8 bg-navy-gradient overflow-hidden">
+      <section className="relative pb-12 md:pb-16 px-4 sm:px-6 lg:px-8 bg-navy-gradient overflow-hidden">
         <div className="absolute inset-0 pattern-cross opacity-20 pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/10 blur-3xl rounded-full pointer-events-none" />
         <div className="relative max-w-3xl mx-auto text-center py-16 md:py-20">
@@ -136,7 +136,7 @@ export default function DailyDevotionalCard({ devotional }: DailyDevotionalCardP
   return (
     <section
       id="daily-devotional"
-      className="relative pt-24 pb-14 md:pb-16 px-4 sm:px-6 lg:px-8 bg-navy-gradient overflow-hidden"
+      className="relative pb-14 md:pb-16 px-4 sm:px-6 lg:px-8 bg-navy-gradient overflow-hidden scroll-mt-[var(--header-height)]"
       aria-labelledby="devotional-heading"
     >
       <div className="absolute inset-0 pattern-cross opacity-15 pointer-events-none" />

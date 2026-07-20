@@ -70,7 +70,7 @@ export default function DonatePage() {
   };
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen">
       {/* Hero */}
       <section className="py-16 md:py-24 bg-navy-gradient relative overflow-hidden">
         <div className="absolute inset-0 pattern-cross opacity-20" />
@@ -99,8 +99,8 @@ export default function DonatePage() {
       <section className="py-20 md:py-28 bg-cream-gradient">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            title="Your Giving Helps Us Serve"
-            subtitle="As a registered charity, your donations directly support our ministry work and community outreach."
+            title="Your Giving Changes Lives"
+            subtitle="As a registered charity, every donation supports the mission of Glory Prayer Ministry. Through your faithful partnership, we are able to reach lives with the Gospel, disciple believers, care for those in need, and extend God’s love through prayer, worship, teaching, and community outreach."
           />
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -109,10 +109,7 @@ export default function DonatePage() {
             transition={{ duration: 0.6 }}
             className="text-navy/70 text-lg leading-relaxed text-center max-w-3xl mx-auto"
           >
-            When you give to Glory Prayer Ministry, you become a partner in the
-            Great Commission. Your generosity enables us to gather in prayer, teach
-            God&apos;s Word, reach those in need, and build a community rooted in
-            faith and love.
+           Together, we are advancing God’s Kingdom, one life at a time.
           </motion.p>
         </div>
       </section>

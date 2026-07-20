@@ -11,19 +11,28 @@ export async function PUT(
     const { id } = await params;
     const body = await request.json();
 
-    const flyer = await prisma.flyer.update({
+    if (!body.title?.trim() || !body.category?.trim() || !body.text?.trim()) {
+      return NextResponse.json(
+        { error: 'Title, category, and prayer text are required.' },
+        { status: 400 }
+      );
+    }
+
+    const prayer = await prisma.prayer.update({
       where: { id },
       data: {
-        title: body.title,
-        imageUrl: body.imageUrl,
-        description: body.description || null,
-        linkUrl: body.linkUrl || null,
-        ctaLabel: body.ctaLabel || null,
+        title: body.title.trim(),
+        category: body.category.trim(),
+        description: body.description?.trim() || '',
+        scripture: body.scripture?.trim() || '',
+        text: body.text.trim(),
         isActive: body.isActive ?? true,
+        isPinned: body.isPinned ?? false,
+        sortOrder: typeof body.sortOrder === 'number' ? body.sortOrder : 0,
       },
     });
 
-    return NextResponse.json(flyer);
+    return NextResponse.json(prayer);
   } catch {
     return NextResponse.json({ error: 'Failed to update' }, { status: 400 });
   }
@@ -36,7 +45,7 @@ export async function DELETE(
   try {
     await requireAdmin();
     const { id } = await params;
-    await prisma.flyer.delete({ where: { id } });
+    await prisma.prayer.delete({ where: { id } });
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ error: 'Failed to delete' }, { status: 400 });

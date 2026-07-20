@@ -2,8 +2,13 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import type { Prayer } from '../lib/prayers';
+import {
+  getPrayerIcon,
+  PRAYER_ICON_SIZE,
+  PRAYER_ICON_STROKE,
+} from '../lib/prayerIcons';
 
 interface PrayerCardProps {
   prayer: Prayer;
@@ -12,6 +17,7 @@ interface PrayerCardProps {
 
 export default function PrayerCard({ prayer, index = 0 }: PrayerCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const Icon = getPrayerIcon(prayer.title);
 
   return (
     <motion.article
@@ -26,7 +32,11 @@ export default function PrayerCard({ prayer, index = 0 }: PrayerCardProps) {
       <div className="p-6 md:p-7">
         <div className="flex items-start gap-4 mb-4">
           <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-gradient-to-br from-gold/20 to-gold-warm/10 flex items-center justify-center">
-            <BookOpen className="text-gold" size={22} strokeWidth={1.5} />
+            <Icon
+              className="text-gold-warm"
+              size={PRAYER_ICON_SIZE}
+              strokeWidth={PRAYER_ICON_STROKE}
+            />
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="text-lg md:text-xl font-bold text-navy mb-1">
