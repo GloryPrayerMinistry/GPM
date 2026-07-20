@@ -41,7 +41,7 @@ export default function Navigation() {
           <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
             <div className="relative h-9 w-9 lg:h-10 lg:w-10">
               <Image
-                src="/logo.png"
+                src="/lion.jpeg"
                 alt="Glory Prayer Ministry"
                 fill
                 className="object-contain"
